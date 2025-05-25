@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\News;
+use App\Models\NewsCategory;
 use Illuminate\Database\Seeder;
 
 class NewsSeeder extends Seeder
@@ -12,6 +13,10 @@ class NewsSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        // Создаем категории
+        NewsCategory::factory()->count(5)->create();
+
+        // Создаем новости
+        News::factory()->count(20)->create();
     }
 }

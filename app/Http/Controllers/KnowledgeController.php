@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreKnowledgeRequest;
-use App\Http\Requests\UpdateKnowledgeRequest;
+use App\Actions\Knowledge\CreateKnowledgeAction;
+use App\Actions\Knowledge\UpdateKnowledgeAction;
+use App\DTO\Knowledge\KnowledgeDTO;
+use App\Http\Requests\Knowledge\StoreKnowledgeRequest;
+use App\Http\Requests\Knowledge\UpdateKnowledgeRequest;
 use App\Models\Knowledge;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class KnowledgeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(
+        private readonly CreateKnowledgeAction $createKnowledgeAction,
+        private readonly UpdateKnowledgeAction $updateKnowledgeAction
+    ) {}
+
+    public function index(): JsonResponse
     {
-        //
+        $knowledge = Knowledge::with('categories')->paginate(10);
+        return response()->json($knowledge);
     }
 
     /**
@@ -24,20 +32,16 @@ class KnowledgeController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreKnowledgeRequest $request)
+    public function store(StoreKnowledgeRequest $request): JsonResponse
     {
-        //
+        $dto = KnowledgeDTO::fromRequest($request->validated());
+        $knowledge = $this->createKnowledgeAction->execute($dto);
+        return response()->json($knowledge, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Knowledge $knowledge)
+    public function show(Knowledge $knowledge): JsonResponse
     {
-        //
+        return response()->json($knowledge->load('categories'));
     }
 
     /**
@@ -48,19 +52,19 @@ class KnowledgeController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateKnowledgeRequest $request, Knowledge $knowledge)
+    public function update(UpdateKnowledgeRequest $request, Knowledge $knowledge): JsonResponse
     {
-        //
+        $dto = KnowledgeDTO::fromRequest($request->validated());
+        $knowledge = $this->updateKnowledgeAction->execute($knowledge, $dto);
+        return response()->json($knowledge);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Knowledge $knowledge)
+    public function destroy(Knowledge $knowledge): JsonResponse
     {
-        //
+        if ($knowledge->image) {
+            Storage::disk('public')->delete($knowledge->image);
+        }
+        $knowledge->delete();
+        return response()->json(null, 204);
     }
 }

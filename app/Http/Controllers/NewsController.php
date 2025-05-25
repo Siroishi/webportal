@@ -2,18 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreNewsRequest;
-use App\Http\Requests\UpdateNewsRequest;
+use App\Actions\News\CreateNewsAction;
+use App\Actions\News\UpdateNewsAction;
+use App\DTO\News\NewsDTO;
+use App\Http\Requests\News\StoreNewsRequest;
+use App\Http\Requests\News\UpdateNewsRequest;
 use App\Models\News;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
+    public function __construct(
+        private readonly CreateNewsAction $createNewsAction,
+        private readonly UpdateNewsAction $updateNewsAction
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $news = News::with('categories')->paginate(10);
+        return response()->json($news);
     }
 
     /**
@@ -27,17 +38,19 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreNewsRequest $request)
+    public function store(StoreNewsRequest $request): JsonResponse
     {
-        //
+        $dto = NewsDTO::fromRequest($request->validated());
+        $news = $this->createNewsAction->execute($dto);
+        return response()->json($news, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(News $news)
+    public function show(News $news): JsonResponse
     {
-        //
+        return response()->json($news->load('categories'));
     }
 
     /**
@@ -51,16 +64,22 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateNewsRequest $request, News $news)
+    public function update(UpdateNewsRequest $request, News $news): JsonResponse
     {
-        //
+        $dto = NewsDTO::fromRequest($request->validated());
+        $news = $this->updateNewsAction->execute($news, $dto);
+        return response()->json($news);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(News $news)
+    public function destroy(News $news): JsonResponse
     {
-        //
+        if ($news->image) {
+            Storage::disk('public')->delete($news->image);
+        }
+        $news->delete();
+        return response()->json(null, 204);
     }
 }
