@@ -28,7 +28,6 @@ class Knowledge extends Model
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(KnowledgeCategory::class, 'knowledge_category_relations')
-            ->withTimestamps();
+        return $this->belongsToMany(KnowledgeCategory::class, 'knowledge_category_relations');
     }
 }

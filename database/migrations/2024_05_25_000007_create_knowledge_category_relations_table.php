@@ -6,22 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('news_categories', function (Blueprint $table) {
+        Schema::create('knowledge_category_relations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('knowledge_id')->constrained()->onDelete('cascade');
+            $table->foreignId('knowledge_category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('news_categories');
+        Schema::dropIfExists('knowledge_category_relations');
     }
-};
+}; 

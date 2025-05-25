@@ -2,26 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Knowledge\CreateKnowledgeAction;
+use App\Actions\Knowledge\StoreKnowledgeAction;
 use App\Actions\Knowledge\UpdateKnowledgeAction;
 use App\DTO\Knowledge\KnowledgeDTO;
 use App\Http\Requests\Knowledge\StoreKnowledgeRequest;
 use App\Http\Requests\Knowledge\UpdateKnowledgeRequest;
 use App\Models\Knowledge;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class KnowledgeController extends Controller
 {
-    public function __construct(
-        private readonly CreateKnowledgeAction $createKnowledgeAction,
-        private readonly UpdateKnowledgeAction $updateKnowledgeAction
-    ) {}
-
-    public function index(): JsonResponse
+    public function index(Request $request): View
     {
-        $knowledge = Knowledge::with('categories')->paginate(10);
-        return response()->json($knowledge);
+        $query = Knowledge::query()->with('categories');
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->has('category')) {
+            $query->whereHas('categories', function($q) use ($request) {
+                $q->where('slug', $request->get('category'));
+            });
+        }
+
+        $knowledge = $query->latest()->paginate(10);
+
+        return view('knowledge.index', compact('knowledge'));
     }
 
     /**
@@ -32,16 +45,17 @@ class KnowledgeController extends Controller
         //
     }
 
-    public function store(StoreKnowledgeRequest $request): JsonResponse
+    public function store(StoreKnowledgeRequest $request, StoreKnowledgeAction $action): JsonResponse
     {
-        $dto = KnowledgeDTO::fromRequest($request->validated());
-        $knowledge = $this->createKnowledgeAction->execute($dto);
+        $dto = KnowledgeDTO::from($request->validated());
+        $knowledge = $action->execute($dto);
         return response()->json($knowledge, 201);
     }
 
-    public function show(Knowledge $knowledge): JsonResponse
+    public function show(Knowledge $knowledge): View
     {
-        return response()->json($knowledge->load('categories'));
+        $knowledge->load('categories');
+        return view('knowledge.show', compact('knowledge'));
     }
 
     /**
@@ -52,18 +66,15 @@ class KnowledgeController extends Controller
         //
     }
 
-    public function update(UpdateKnowledgeRequest $request, Knowledge $knowledge): JsonResponse
+    public function update(UpdateKnowledgeRequest $request, Knowledge $knowledge, UpdateKnowledgeAction $action): JsonResponse
     {
-        $dto = KnowledgeDTO::fromRequest($request->validated());
-        $knowledge = $this->updateKnowledgeAction->execute($knowledge, $dto);
+        $dto = KnowledgeDTO::from($request->validated());
+        $knowledge = $action->execute($knowledge, $dto);
         return response()->json($knowledge);
     }
 
     public function destroy(Knowledge $knowledge): JsonResponse
     {
-        if ($knowledge->image) {
-            Storage::disk('public')->delete($knowledge->image);
-        }
         $knowledge->delete();
         return response()->json(null, 204);
     }

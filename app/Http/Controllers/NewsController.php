@@ -9,7 +9,9 @@ use App\Http\Requests\News\StoreNewsRequest;
 use App\Http\Requests\News\UpdateNewsRequest;
 use App\Models\News;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class NewsController extends Controller
 {
@@ -21,10 +23,27 @@ class NewsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): View
     {
-        $news = News::with('categories')->paginate(10);
-        return response()->json($news);
+        $query = News::query()->with('categories');
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->has('category')) {
+            $query->whereHas('categories', function($q) use ($request) {
+                $q->where('slug', $request->get('category'));
+            });
+        }
+
+        $news = $query->latest()->paginate(10);
+
+        return view('news.index', compact('news'));
     }
 
     /**
@@ -38,19 +57,20 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreNewsRequest $request): JsonResponse
+    public function store(StoreNewsRequest $request, StoreNewsAction $action): JsonResponse
     {
-        $dto = NewsDTO::fromRequest($request->validated());
-        $news = $this->createNewsAction->execute($dto);
+        $dto = NewsDTO::from($request->validated());
+        $news = $action->execute($dto);
         return response()->json($news, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(News $news): JsonResponse
+    public function show(News $news): View
     {
-        return response()->json($news->load('categories'));
+        $news->load('categories');
+        return view('news.show', compact('news'));
     }
 
     /**
@@ -64,10 +84,10 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateNewsRequest $request, News $news): JsonResponse
+    public function update(UpdateNewsRequest $request, News $news, UpdateNewsAction $action): JsonResponse
     {
-        $dto = NewsDTO::fromRequest($request->validated());
-        $news = $this->updateNewsAction->execute($news, $dto);
+        $dto = NewsDTO::from($request->validated());
+        $news = $action->execute($news, $dto);
         return response()->json($news);
     }
 
