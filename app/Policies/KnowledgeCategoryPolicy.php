@@ -13,7 +13,7 @@ class KnowledgeCategoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -21,7 +21,7 @@ class KnowledgeCategoryPolicy
      */
     public function view(User $user, KnowledgeCategory $knowledgeCategory): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -29,7 +29,7 @@ class KnowledgeCategoryPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -37,7 +37,7 @@ class KnowledgeCategoryPolicy
      */
     public function update(User $user, KnowledgeCategory $knowledgeCategory): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -45,7 +45,7 @@ class KnowledgeCategoryPolicy
      */
     public function delete(User $user, KnowledgeCategory $knowledgeCategory): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -53,7 +53,7 @@ class KnowledgeCategoryPolicy
      */
     public function restore(User $user, KnowledgeCategory $knowledgeCategory): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -61,6 +61,6 @@ class KnowledgeCategoryPolicy
      */
     public function forceDelete(User $user, KnowledgeCategory $knowledgeCategory): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 }

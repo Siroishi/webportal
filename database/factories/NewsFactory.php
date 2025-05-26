@@ -26,7 +26,8 @@ class NewsFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'content' => $this->faker->paragraphs(3, true),
-            'image' => 'news/' . $this->faker->image('storage/app/public/news', 800, 600, null, false),
+            //'image' => 'news/' . $this->faker->image('storage/app/public/news', 800, 600, null, false),
+            'image' => 'news/image.png',
             'is_published' => $this->faker->boolean(),
             'published_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];

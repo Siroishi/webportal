@@ -13,7 +13,7 @@ class UnivercityFacultyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -21,7 +21,7 @@ class UnivercityFacultyPolicy
      */
     public function view(User $user, UnivercityFaculty $univercityFaculty): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -29,7 +29,7 @@ class UnivercityFacultyPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -37,7 +37,7 @@ class UnivercityFacultyPolicy
      */
     public function update(User $user, UnivercityFaculty $univercityFaculty): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -45,7 +45,7 @@ class UnivercityFacultyPolicy
      */
     public function delete(User $user, UnivercityFaculty $univercityFaculty): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -53,7 +53,7 @@ class UnivercityFacultyPolicy
      */
     public function restore(User $user, UnivercityFaculty $univercityFaculty): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -61,6 +61,6 @@ class UnivercityFacultyPolicy
      */
     public function forceDelete(User $user, UnivercityFaculty $univercityFaculty): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 }

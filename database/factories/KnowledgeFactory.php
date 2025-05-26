@@ -26,7 +26,8 @@ class KnowledgeFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'content' => $this->faker->paragraphs(3, true),
-            'image' => 'knowledge/' . $this->faker->image('storage/app/public/knowledge', 800, 600, null, false),
+            //'image' => 'knowledge/' . $this->faker->image('storage/app/public/knowledge', 800, 600, null, false),
+            'image' => 'knowledge/image.png',
             'is_published' => $this->faker->boolean(),
             'published_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
