@@ -35,7 +35,7 @@ class UniversityController extends Controller
 
         $universities = $query->latest()->paginate(10);
 
-        return view('universities.index', compact('universities'));
+        return view('pages/universities.index', compact('universities'));
     }
 
     public function store(StoreUniversityRequest $request, StoreUniversityAction $action): JsonResponse
@@ -48,7 +48,7 @@ class UniversityController extends Controller
     public function show(University $university): View
     {
         $university->load('faculties');
-        return view('universities.show', compact('university'));
+        return view('pages/universities.show', compact('university'));
     }
 
     public function update(UpdateUniversityRequest $request, University $university, UpdateUniversityAction $action): JsonResponse
@@ -63,4 +63,4 @@ class UniversityController extends Controller
         $university->delete();
         return response()->json(null, 204);
     }
-} 
+}

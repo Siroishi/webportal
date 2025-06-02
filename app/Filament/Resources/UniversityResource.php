@@ -17,22 +17,22 @@ class UniversityResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationGroup = 'Университеты';
+    protected static ?string $navigationGroup = 'Університети';
 
-    protected static ?string $modelLabel = 'Университет';
+    protected static ?string $modelLabel = 'Університет';
 
-    protected static ?string $pluralModelLabel = 'Университеты';
+    protected static ?string $pluralModelLabel = 'Університети';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Название')
+                    ->label('Назва')
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => 
+                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) =>
                         $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                 Forms\Components\TextInput::make('slug')
@@ -42,7 +42,7 @@ class UniversityResource extends Resource
                     ->unique(ignoreRecord: true),
 
                 Forms\Components\Textarea::make('description')
-                    ->label('Описание')
+                    ->label('Опис')
                     ->maxLength(65535)
                     ->columnSpanFull(),
 
@@ -53,7 +53,7 @@ class UniversityResource extends Resource
                     ->columnSpanFull(),
 
                 Forms\Components\TextInput::make('address')
-                    ->label('Адрес')
+                    ->label('Адреса')
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('phone')
@@ -72,11 +72,11 @@ class UniversityResource extends Resource
                     ->maxLength(255),
 
                 Forms\Components\Toggle::make('is_active')
-                    ->label('Активно')
+                    ->label('Активний')
                     ->default(true),
 
                 Forms\Components\Select::make('faculties')
-                    ->label('Факультеты')
+                    ->label('Факультети')
                     ->multiple()
                     ->relationship('faculties', 'name')
                     ->preload(),
@@ -88,7 +88,7 @@ class UniversityResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Название')
+                    ->label('Назва')
                     ->searchable()
                     ->sortable(),
 
@@ -113,22 +113,22 @@ class UniversityResource extends Resource
                     ->searchable(),
 
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label('Активно')
+                    ->label('Активний')
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('faculties_count')
-                    ->label('Количество факультетов')
+                    ->label('Кількість факультетів')
                     ->counts('faculties')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Создано')
+                    ->label('Створенно')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Обновлено')
+                    ->label('Обновленно')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -139,7 +139,7 @@ class UniversityResource extends Resource
                     ->multiple()
                     ->preload(),
                 Tables\Filters\TernaryFilter::make('is_active')
-                    ->label('Активно'),
+                    ->label('Активний'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -167,4 +167,4 @@ class UniversityResource extends Resource
             'edit' => Pages\EditUniversity::route('/{record}/edit'),
         ];
     }
-} 
+}

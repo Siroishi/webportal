@@ -43,7 +43,7 @@ class NewsController extends Controller
 
         $news = $query->latest()->paginate(10);
 
-        return view('news.index', compact('news'));
+        return view('pages/news.index', compact('news'));
     }
 
     /**
@@ -70,7 +70,7 @@ class NewsController extends Controller
     public function show(News $news): View
     {
         $news->load('categories');
-        return view('news.show', compact('news'));
+        return view('pages/news.snow', compact('news'));
     }
 
     /**

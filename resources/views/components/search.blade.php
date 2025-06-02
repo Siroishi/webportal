@@ -1,16 +1,32 @@
-@props(['route', 'placeholder' => 'Поиск...'])
+@props(['route','placeholder' => 'Пошук…',
+])
 
-<form action="{{ route($route) }}" method="GET" class="mb-6">
-    <div class="flex gap-4">
-        <div class="flex-1">
-            <input type="text" 
-                   name="search" 
-                   value="{{ request('search') }}" 
-                   placeholder="{{ $placeholder }}"
-                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+<form action="{{ route($route) }}" method="GET" class="my-10">
+    <div class="flex justify-center">
+        <div class="relative w-full max-w-3xl">
+            {{-- поле вводу --}}
+            <input  type="text"
+                    name="search"
+                    value="{{ request('search') }}"
+                    placeholder="{{ $placeholder }}"
+                    class="w-full pl-6 pr-12 py-2 rounded-full
+                           border border-[#E98074] bg-transparent
+                           text-[#E85A4F] placeholder-[#8E8D8A]
+                           focus:outline-none focus:border-[#E85A4F]" />
+
+            {{-- кнопка-лупа --}}
+            <button type="submit"
+                    class="absolute inset-y-0 right-4 flex items-center group cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-5 h-5 stroke-[#E85A4F]
+                            transition-transform duration-150
+                            group-hover:scale-120"
+                     fill="none" viewBox="0 0 24 24" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+            </button>
         </div>
-        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            Найти
-        </button>
     </div>
-</form> 
+</form>

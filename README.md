@@ -5,7 +5,7 @@
 1. Клонируйте репозиторий:
 ```bash
 git clone <url-репозитория>
-cd etimax
+cd webportal
 ```
 
 2. Запустите Laravel Sail:

@@ -17,11 +17,11 @@ class NewsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static ?string $navigationGroup = 'Новости';
+    protected static ?string $navigationGroup = 'Новини';
 
-    protected static ?string $modelLabel = 'Новость';
+    protected static ?string $modelLabel = 'Новина';
 
-    protected static ?string $pluralModelLabel = 'Новости';
+    protected static ?string $pluralModelLabel = 'Новини';
 
     public static function form(Form $form): Form
     {
@@ -32,7 +32,7 @@ class NewsResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => 
+                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) =>
                         $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                 Forms\Components\TextInput::make('slug')
@@ -42,26 +42,26 @@ class NewsResource extends Resource
                     ->unique(ignoreRecord: true),
 
                 Forms\Components\RichEditor::make('content')
-                    ->label('Содержание')
+                    ->label('Зміст')
                     ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\FileUpload::make('image')
-                    ->label('Изображение')
+                    ->label('Зображення')
                     ->image()
                     ->directory('news')
                     ->columnSpanFull(),
 
                 Forms\Components\Toggle::make('is_published')
-                    ->label('Опубликовано')
+                    ->label('Опублікованно')
                     ->default(false),
 
                 Forms\Components\DateTimePicker::make('published_at')
-                    ->label('Дата публикации')
+                    ->label('Дата публікації')
                     ->nullable(),
 
                 Forms\Components\Select::make('categories')
-                    ->label('Категории')
+                    ->label('Категорії')
                     ->multiple()
                     ->relationship('categories', 'name')
                     ->preload(),
@@ -78,25 +78,25 @@ class NewsResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\ImageColumn::make('image')
-                    ->label('Изображение'),
+                    ->label('Зображення'),
 
                 Tables\Columns\IconColumn::make('is_published')
-                    ->label('Опубликовано')
+                    ->label('Опублікованно')
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('published_at')
-                    ->label('Дата публикации')
+                    ->label('Дата публикації')
                     ->dateTime()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Создано')
+                    ->label('Створенно')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Обновлено')
+                    ->label('Обновленно')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -107,7 +107,7 @@ class NewsResource extends Resource
                     ->multiple()
                     ->preload(),
                 Tables\Filters\TernaryFilter::make('is_published')
-                    ->label('Опубликовано'),
+                    ->label('Опублікованно'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -135,4 +135,4 @@ class NewsResource extends Resource
             'edit' => Pages\EditNews::route('/{record}/edit'),
         ];
     }
-} 
+}

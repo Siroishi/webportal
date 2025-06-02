@@ -17,22 +17,22 @@ class KnowledgeCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationGroup = 'База знаний';
+    protected static ?string $navigationGroup = 'База знанань';
 
-    protected static ?string $modelLabel = 'Категория';
+    protected static ?string $modelLabel = 'Категорія';
 
-    protected static ?string $pluralModelLabel = 'Категории';
+    protected static ?string $pluralModelLabel = 'Категорії';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Название')
+                    ->label('Назва')
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => 
+                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) =>
                         $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                 Forms\Components\TextInput::make('slug')
@@ -42,7 +42,7 @@ class KnowledgeCategoryResource extends Resource
                     ->unique(ignoreRecord: true),
 
                 Forms\Components\Textarea::make('description')
-                    ->label('Описание')
+                    ->label('Опис')
                     ->maxLength(65535)
                     ->columnSpanFull(),
             ]);
@@ -53,7 +53,7 @@ class KnowledgeCategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Название')
+                    ->label('Назва')
                     ->searchable()
                     ->sortable(),
 
@@ -63,18 +63,18 @@ class KnowledgeCategoryResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('knowledge_count')
-                    ->label('Количество статей')
+                    ->label('Калькість статтів')
                     ->counts('knowledge')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Создано')
+                    ->label('Створенно')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Обновлено')
+                    ->label('Обновленно')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -108,4 +108,4 @@ class KnowledgeCategoryResource extends Resource
             'edit' => Pages\EditKnowledgeCategory::route('/{record}/edit'),
         ];
     }
-} 
+}

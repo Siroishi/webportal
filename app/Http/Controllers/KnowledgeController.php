@@ -34,7 +34,7 @@ class KnowledgeController extends Controller
 
         $knowledge = $query->latest()->paginate(10);
 
-        return view('knowledge.index', compact('knowledge'));
+        return view('pages/knowledge.index', compact('knowledge'));
     }
 
     /**
@@ -55,7 +55,7 @@ class KnowledgeController extends Controller
     public function show(Knowledge $knowledge): View
     {
         $knowledge->load('categories');
-        return view('knowledge.show', compact('knowledge'));
+        return view('pages/knowledge.show', compact('knowledge'));
     }
 
     /**

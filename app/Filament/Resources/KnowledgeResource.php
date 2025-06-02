@@ -17,11 +17,11 @@ class KnowledgeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
-    protected static ?string $navigationGroup = 'База знаний';
+    protected static ?string $navigationGroup = 'База знань';
 
-    protected static ?string $modelLabel = 'Статья';
+    protected static ?string $modelLabel = 'Стаття';
 
-    protected static ?string $pluralModelLabel = 'Статьи';
+    protected static ?string $pluralModelLabel = 'Статті';
 
     public static function form(Form $form): Form
     {
@@ -42,26 +42,26 @@ class KnowledgeResource extends Resource
                     ->unique(ignoreRecord: true),
 
                 Forms\Components\RichEditor::make('content')
-                    ->label('Содержание')
+                    ->label('Зміст')
                     ->required()
                     ->columnSpanFull(),
 
                 Forms\Components\FileUpload::make('image')
-                    ->label('Изображение')
+                    ->label('Зображення')
                     ->image()
                     ->directory('knowledge')
                     ->columnSpanFull(),
 
                 Forms\Components\Toggle::make('is_published')
-                    ->label('Опубликовано')
+                    ->label('Опубліковано')
                     ->default(false),
 
                 Forms\Components\DateTimePicker::make('published_at')
-                    ->label('Дата публикации')
+                    ->label('Дата публікації')
                     ->nullable(),
 
                 Forms\Components\Select::make('categories')
-                    ->label('Категории')
+                    ->label('Категорії')
                     ->multiple()
                     ->relationship('categories', 'name')
                     ->preload(),
@@ -78,19 +78,19 @@ class KnowledgeResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\ImageColumn::make('image')
-                    ->label('Изображение'),
+                    ->label('Зображення'),
 
                 Tables\Columns\IconColumn::make('is_published')
-                    ->label('Опубликовано')
+                    ->label('Опубліковано')
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('published_at')
-                    ->label('Дата публикации')
+                    ->label('Дата публікації')
                     ->dateTime()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Создано')
+                    ->label('Створено')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -107,7 +107,7 @@ class KnowledgeResource extends Resource
                     ->multiple()
                     ->preload(),
                 Tables\Filters\TernaryFilter::make('is_published')
-                    ->label('Опубликовано'),
+                    ->label('Опубліковано'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
