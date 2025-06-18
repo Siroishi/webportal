@@ -17,7 +17,7 @@ class KnowledgeCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationGroup = 'База знанань';
+    protected static ?string $navigationGroup = 'База знань';
 
     protected static ?string $modelLabel = 'Категорія';
 
@@ -74,7 +74,7 @@ class KnowledgeCategoryResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Обновленно')
+                    ->label('Обновленноа')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

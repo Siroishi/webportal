@@ -70,7 +70,7 @@ class NewsController extends Controller
     public function show(News $news): View
     {
         $news->load('categories');
-        return view('pages/news.snow', compact('news'));
+        return view('pages/news.show', compact('news'));
     }
 
     /**
