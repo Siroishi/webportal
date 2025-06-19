@@ -6,7 +6,7 @@ ARG WWWGROUP
 ARG NODE_VERSION=22
 ARG MYSQL_CLIENT="mysql-client"
 ARG POSTGRES_VERSION=17
-
+ARG WWWGROUP=1000
 WORKDIR /var/www/html
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -58,7 +58,7 @@ RUN apt-get update && apt-get upgrade -y \
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.4
 
 
-ARG WWWGROUP=1000
+
 RUN userdel -r ubuntu
 RUN groupadd --force -g $WWWGROUP sail
 RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
