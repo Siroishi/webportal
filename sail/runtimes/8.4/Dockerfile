@@ -56,6 +56,7 @@ RUN apt-get update && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.4
+ARG WWWGROUP=1000
 
 RUN userdel -r ubuntu
 RUN groupadd --force -g $WWWGROUP sail
