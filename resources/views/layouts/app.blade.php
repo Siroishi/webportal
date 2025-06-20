@@ -33,7 +33,7 @@
                class="uppercase text-sm font-semibold tracking-widest
                       {{ request()->routeIs('universities.*') ? 'text-[#E85A4F]' : 'text-[#8E8D8A] hover:text-[#E85A4F]' }}"
                style="font-family:'Oswald',sans-serif">
-                Університети
+                ВНЗІ
             </a>
 
             <a href="{{ route('knowledge.index') }}"
@@ -54,13 +54,13 @@
 
         {{-- Log-in / Registered --}}
         <div class="hidden lg:flex items-stretch rounded-md border border-[#E98074] text-[#E85A4F]">
-            <a href="#"
+            <a href="/login"
                class="px-6 py-2 font-semibold uppercase tracking-wide hover:bg-[#E85A4F]/10"
                style="font-family:'Oswald',sans-serif">
                 Log-in
             </a>
             <div class="w-px bg-[#E98074]"></div>
-            <a href="#"
+            <a href="/registragion"
                class="px-6 py-2 font-semibold uppercase tracking-wide hover:bg-[#E85A4F]/10"
                style="font-family:'Oswald',sans-serif">
                 Registered
@@ -111,5 +111,46 @@
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         @yield('content')
     </main>
+    {{-- футер --}}
+    <footer class="bg-[#2D2D2D] border-t border-[#E98074] mt-12">
+    <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-[#8E8D8A] text-sm"
+         style="font-family: 'Oswald', sans-serif">
+
+        <!-- Логотип и слоган -->
+        <div>
+            <div class="flex items-center gap-3 mb-3">
+
+                <span class="text-xl font-bold text-[#E85A4F]">EDU HELP</span>
+            </div>
+            <p class="text-[#8E8D8A]">
+                Допомагаємо зробити правильний вибір у світі освіти.
+            </p>
+        </div>
+
+        <!-- Меню -->
+        <div class="space-y-2">
+            <h3 class="uppercase font-semibold tracking-wide text-[#E85A4F]">Навігація</h3>
+            <ul class="space-y-1">
+                <li><a href="{{ route('news.index') }}" class="hover:text-[#E85A4F] transition">Новини</a></li>
+                <li><a href="{{ route('universities.index') }}" class="hover:text-[#E85A4F] transition">Університети</a></li>
+                <li><a href="{{ route('knowledge.index') }}" class="hover:text-[#E85A4F] transition">База знань</a></li>
+                <li><a href="#" class="hover:text-[#E85A4F] transition">Кабінет</a></li>
+            </ul>
+        </div>
+
+        <!-- Контакти -->
+        <div class="space-y-2">
+            <h3 class="uppercase font-semibold tracking-wide text-[#E85A4F]">Контакти</h3>
+            <p>Email: <a href="mailto:support@eduhelp.ua" class="hover:text-[#E85A4F] transition">support@eduhelp.ua</a></p>
+            <p>Телефон: <a href="tel:+380991112233" class="hover:text-[#E85A4F] transition">+38 (099) 111-22-33</a></p>
+        </div>
+    </div>
+
+    <!-- Низ футера -->
+    <div class="text-center text-xs text-[#8E8D8A] py-4">
+        © {{ date('Y') }} EDU HELP. Всі права захищено.
+    </div>
+</footer>
+
 </body>
 </html>

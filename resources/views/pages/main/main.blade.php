@@ -4,7 +4,7 @@
 @section('content')
     <main class="bg-[#EAE7DC] antialiased">
 
-        {{-- HERO ------------------------------------------------------------- --}}
+
         <section class="max-w-4xl mx-auto text-center py-16 px-6">
             <h1 class="text-[#E85A4F] text-5xl md:text-6xl font-extrabold leading-tight"
                 style="font-family:'Oswald',sans-serif">
@@ -16,7 +16,7 @@
             </p>
         </section>
 
-        {{-- LAST NEWS CARD ---------------------------------------------------- --}}
+
         <section class="max-w-5xl mx-auto py-8 px-6">
             <div
                 class="flex flex-col md:flex-row items-stretch rounded-3xl border border-[#E98074] bg-[#FDFCF9] shadow-md">
@@ -39,7 +39,7 @@
                     </a>
                 </div>
 
-                {{-- замініть шлях до зображення на реальне --}}
+
                 <div class="md:w-72 md:flex-shrink-0">
                     <img src="{{ Vite::asset('resources/images/news-preview.jpg') }}"
                          alt="Latest news"

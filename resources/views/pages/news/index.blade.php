@@ -3,7 +3,7 @@
 @section('content')
     <section class="max-w-7xl mx-auto px-4 py-12">
 
-        {{-- Заголовок --}}
+
         <h1 class="text-center font-extrabold text-[#E85A4F] text-4xl mb-10"
             style="font-family:'Oswald',sans-serif">
             ОСТАННІ НОВИНИ
@@ -17,9 +17,9 @@
             $rest = $news->slice(3);
         @endphp
 
-        {{-- Верхний блок: 1+2 --}}
+
         <div class="grid md:grid-cols-3 gap-10 mb-16">
-            {{-- 1 большая карточка --}}
+
             @if($first)
                 <div class="md:col-span-2 rounded-xl overflow-hidden shadow border border-[#E98074] bg-white">
                     @if($first->image)
@@ -53,7 +53,7 @@
                 </div>
             @endif
 
-            {{-- 2 маленькие карточки --}}
+
             <div class="flex flex-col gap-8">
                 @foreach($nextTwo as $item)
                     <div class="flex gap-4">
@@ -79,9 +79,9 @@
             </div>
         </div>
 
-        {{-- Остальная сетка + Сайдбар --}}
+
         <div class="grid lg:grid-cols-3 gap-10">
-            {{-- Новости 2 колонки --}}
+
             <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-10">
                 @foreach($rest as $item)
                     <div class="bg-white border border-[#E98074] rounded-xl shadow-md overflow-hidden">
@@ -117,7 +117,7 @@
                 @endforeach
             </div>
 
-            {{-- Сайдбар --}}
+
             @isset($sidebarWeek)
                 <aside class="sticky top-24 h-fit bg-white border border-[#E98074] p-6 rounded-xl shadow">
                     <h3 class="text-[#E85A4F] font-bold mb-4" style="font-family:'Oswald',sans-serif">
@@ -140,7 +140,7 @@
             @endisset
         </div>
 
-        {{-- Пагінація --}}
+
         <div class="mt-12 text-center">
             {{ $news->links() }}
         </div>

@@ -17,7 +17,7 @@ class UniversityFacultyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
-    protected static ?string $navigationGroup = 'Університети';
+    protected static ?string $navigationGroup = 'ВНЗ';
 
     protected static ?string $modelLabel = 'Факультет';
 

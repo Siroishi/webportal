@@ -55,9 +55,9 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->navigationGroups([
-                'Новости',
-                'База знаний',
-                'Университеты',
+                'Новини',
+                'База знань',
+                'Університети',
             ]);
     }
 }

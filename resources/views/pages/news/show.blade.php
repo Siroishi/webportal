@@ -17,7 +17,7 @@
                     {{ $news->title }}
                 </h1>
 
-                {{-- Категорії --}}
+
                 <div class="flex flex-wrap gap-2 mb-4">
                     @foreach($news->categories as $category)
                         <span class="bg-[#EAE7DC] text-[#E85A4F] text-sm font-medium px-3 py-1 rounded">
@@ -26,12 +26,12 @@
                     @endforeach
                 </div>
 
-                {{-- Контент --}}
+
                 <div class="prose max-w-none text-[#4B4B4B]">
                     {!! $news->content !!}
                 </div>
 
-                {{-- Дата --}}
+
                 <div class="mt-6 text-sm text-[#8E8D8A]">
                     Опубліковано: {{ $news->published_at?->format('d.m.Y H:i') }}
                 </div>

@@ -14,13 +14,13 @@ class NewsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Создаем категории
+
         $categories = NewsCategory::factory()->count(5)->create();
 
-        // Создаем новости
+
         $news = News::factory()->count(20)->create();
 
-        // Привязываем категории к новостям
+
         foreach ($news as $item) {
             $item->categories()->attach(
                 $categories->random(rand(1, 3))->pluck('id')->toArray()

@@ -10,16 +10,14 @@ use App\Http\Controllers\UniversityFacultyController;
 use App\Http\Controllers\UniversityFacultyRelationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect()->route('news.index');
-})->name('home');
+
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('main', 'pages/main.main')
-    ->name('home2');
+Route::view('/', 'pages/main.main')
+    ->name('home');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

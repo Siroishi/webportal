@@ -31,4 +31,8 @@ class University extends Model
     {
         return $this->belongsToMany(UniversityFaculty::class, 'university_faculty');
     }
-} 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+}

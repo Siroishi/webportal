@@ -12,21 +12,21 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        // Создаем админа
+
         $admin = User::firstOrCreate(
-            ['email' => 'admin@test.com'],
+            ['email' => 'OsadchukM@admin.com'],
             [
                 'name' => 'Admin',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('12345678'),
             ]
         );
 
-        // Создаем роль админа
+
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
 
-        // Создаем разрешения
+
         $permissions = [
-            // Новости
+
             'view_any_news',
             'view_news',
             'create_news',
@@ -35,7 +35,7 @@ class AdminSeeder extends Seeder
             'restore_news',
             'force_delete_news',
 
-            // Категории новостей
+
             'view_any_news_categories',
             'view_news_categories',
             'create_news_categories',
@@ -44,7 +44,6 @@ class AdminSeeder extends Seeder
             'restore_news_categories',
             'force_delete_news_categories',
 
-            // База знаний
             'view_any_knowledge',
             'view_knowledge',
             'create_knowledge',
@@ -53,7 +52,6 @@ class AdminSeeder extends Seeder
             'restore_knowledge',
             'force_delete_knowledge',
 
-            // Категории базы знаний
             'view_any_knowledge_categories',
             'view_knowledge_categories',
             'create_knowledge_categories',
@@ -67,10 +65,9 @@ class AdminSeeder extends Seeder
             Permission::firstOrCreate(['name' => $permission]);
         }
 
-        // Назначаем все разрешения роли админа
+
         $adminRole->syncPermissions($permissions);
 
-        // Назначаем роль админа пользователю
         $admin->syncRoles(['admin']);
     }
 }

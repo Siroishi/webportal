@@ -17,11 +17,11 @@ class UniversityResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationGroup = 'Університети';
+    protected static ?string $navigationGroup = 'ВНЗ';
 
-    protected static ?string $modelLabel = 'Університет';
+    protected static ?string $modelLabel = 'ВНЗ';
 
-    protected static ?string $pluralModelLabel = 'Університети';
+    protected static ?string $pluralModelLabel = 'ВНЗ';
 
     public static function form(Form $form): Form
     {

@@ -1,47 +1,60 @@
+{{-- resources/views/knowledge/index.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8">База знаний</h1>
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-center font-extrabold text-[#E85A4F] text-4xl mb-10"
+            style="font-family:'Oswald',sans-serif">
+            БАЗА ЗНАНЬ
+        </h1>
 
-    <x-search route="knowledge.index" placeholder="Поиск по базе знаний..." />
+        <x-search route="knowledge.index" placeholder="Пошук по базі знань..." />
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @foreach($knowledge as $item)
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                @if($item->image)
-                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="w-full h-48 object-cover">
-                @endif
+        <div class="flex flex-col gap-6">
+            @foreach ($knowledge as $item)
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden p-4" style="border: 1px solid #E98074;">
+                    <div class="flex flex-col md:flex-row gap-4 items-start">
+                        @if ($item->image)
+                            <img src="{{ asset('storage/'.$item->image) }}"
+                                 alt="{{ $item->title }}"
+                                 class="w-50 h-50 object-cover rounded-md flex-shrink-0">
+                        @endif
 
-                <div class="p-4">
-                    <h2 class="text-xl font-semibold mb-2">
-                        <a href="{{ route('knowledge.show', $item) }}" class="hover:text-blue-600">
-                            {{ $item->title }}
-                        </a>
-                    </h2>
+                        <div class="flex-1">
+                            <h2 class="text-2xl font-semibold mb-2 text-[#E85A4F]">
+                                <a href="{{ route('knowledge.show', $item) }}" class="hover:underline">
+                                    {{ $item->title }}
+                                </a>
+                            </h2>
 
-                    <div class="flex flex-wrap gap-2 mb-3">
-                        @foreach($item->categories as $category)
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
-                                {{ $category->name }}
-                            </span>
-                        @endforeach
-                    </div>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                @foreach ($item->categories as $category)
+                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
+                                    {{ $category->name }}
+                                </span>
+                                @endforeach
+                            </div>
 
-                    <p class="text-gray-600 mb-4">
-                        {{ Str::limit(strip_tags($item->content), 150) }}
-                    </p>
+                            {{-- ↓ головна зміна: декодуємо HTML-сутності, тоді обмежуємо довжину --}}
+                            @php
+                                $excerpt = Str::limit(
+                                    html_entity_decode(strip_tags($item->content)),
+                                    200
+                                );
+                            @endphp
+                            <p class="text-gray-700 mb-4">{{ $excerpt }}</p>
 
-                    <div class="text-sm text-gray-500">
-                        {{ $item->published_at?->format('d.m.Y H:i') }}
+                            <div class="text-sm text-gray-500">
+                                {{ optional($item->published_at)->format('d.m.Y H:i') }}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
-    </div>
+            @endforeach
+        </div>
 
-    <div class="mt-8">
-        {{ $knowledge->links() }}
+        <div class="mt-8">
+            {{ $knowledge->links() }}
+        </div>
     </div>
-</div>
 @endsection

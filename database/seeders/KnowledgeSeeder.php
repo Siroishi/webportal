@@ -14,13 +14,13 @@ class KnowledgeSeeder extends Seeder
      */
     public function run(): void
     {
-        // Создаем категории
+
         $categories = KnowledgeCategory::factory()->count(5)->create();
 
-        // Создаем статьи
+
         $knowledge = Knowledge::factory()->count(20)->create();
 
-        // Привязываем категории к статьям
+
         foreach ($knowledge as $item) {
             $item->categories()->attach(
                 $categories->random(rand(1, 3))->pluck('id')->toArray()

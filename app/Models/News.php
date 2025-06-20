@@ -29,4 +29,9 @@ class News extends Model
     {
         return $this->belongsToMany(NewsCategory::class, 'news_category');
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }

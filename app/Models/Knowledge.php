@@ -30,4 +30,8 @@ class Knowledge extends Model
     {
         return $this->belongsToMany(KnowledgeCategory::class, 'knowledge_category_relations');
     }
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }
